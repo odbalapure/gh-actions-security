@@ -7,6 +7,9 @@ on:
       - edited
 jobs:
   assign-label:
+    # permissions: write-all
+    permissions:
+      issues: write
     runs-on: ubuntu-latest
     steps:
       - name: Assign label

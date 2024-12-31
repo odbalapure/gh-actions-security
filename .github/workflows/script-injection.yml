@@ -6,12 +6,17 @@ on:
       - edited
 jobs:
   assign-label:
+    env:
+      # Now the title is evaluated outside the shell
+      # And it will be treated as a string in the IF condition
+      # The title is now a string and not a command
+      # This is a security measure to prevent script injection
+      TITLE: ${{ github.event.issue.title }}
     runs-on: ubuntu-latest
     steps:
       - name: Assign label
         run: |
-          issue_title="${{ github.event.issue.title }}"
-          if [[ "$issue_title" == *"bug"* ]]; then
+          if [[ "$TITLE" == *"bug"* ]]; then
           echo "Issue is about a bug!"
           else
           echo "Issue is not about a bug"
